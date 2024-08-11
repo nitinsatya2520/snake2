@@ -1,0 +1,285 @@
+/* src/SnakeGame.css */
+
+/* Common Styles */
+:root {
+    --snake-color: #00ff15;
+    --snake-body-color: #009e00;
+    --snake-tail-color: #007700;
+    --food-color: #f00;
+    --big-food-color: #ff0;
+    --background-color: #e0eafc;
+    --border-color: #000;
+    --button-bg: #ff6b6b;
+    --button-bg-hover: #f06595;
+    --button-text-color: #fff;
+    --font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--background-color), #cfdef3);
+    font-family: var(--font-family);
+    color: #333;
+    width: 100%;
+}
+
+.snake-game {
+    text-align: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 4rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+    letter-spacing: 2px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.settings {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.settings label {
+    font-size: 1.3rem;
+}
+
+.settings select {
+    padding: 8px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: linear-gradient(135deg, #fff, #f0f0f0);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.settings select:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    width: 100%;
+    gap: 2px;
+    margin: 20px auto;
+    position: relative;
+    border: 3px solid var(--border-color);
+    border-radius: 15px;
+    background: linear-gradient(145deg, #f4f4f4, #e0e0e0);
+}
+
+.cell {
+    width: 25px;
+    height: 25px;
+    background-color: #ddd;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.cell:hover {
+    background-color: #ccc;
+    transform: scale(1.05);
+}
+
+.snake {
+    background-color: var(--snake-color);
+    box-shadow: 0 0 8px var(--snake-color);
+}
+
+.snake-head {
+    background-color: var(--snake-color);
+    box-shadow: 0 0 8px var(--snake-color);
+}
+
+.snake-body {
+    background-color: var(--snake-body-color);
+    box-shadow: 0 0 8px var(--snake-body-color);
+}
+
+.snake-tail {
+    background-color: var(--snake-tail-color);
+    box-shadow: 0 0 8px var(--snake-tail-color);
+}
+
+.food {
+    size: 5px;
+    border-radius: 50%;
+    background-color: var(--food-color);
+    box-shadow: 0 0 8px var(--food-color);
+}
+
+.big-food {
+    background-color: var(--big-food-color);
+    box-shadow: 0 0 10px var(--big-food-color);
+    animation: bigFoodFlash 1s infinite;
+}
+
+@keyframes bigFoodFlash {
+    0% { background-color: var(--big-food-color); }
+    50% { background-color: #ffd700; }
+    100% { background-color: var(--big-food-color); }
+}
+
+/* Themes */
+.classic .board {
+    background: #fff;
+}
+
+.neon .board {
+    background: #000;
+    border: 3px solid #0ff;
+}
+
+.neon .cell {
+    border: 1px solid #0ff;
+}
+
+.dark .board {
+    background: #222;
+}
+
+.dark .cell {
+    background: #444;
+}
+
+/* Game Over */
+.game-over {
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from { transform: translate(-50%, -100%); }
+    to { transform: translate(-50%, -50%); }
+}
+
+/* Buttons */
+.restart-button,
+.pause-button,
+.start-button {
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.restart-button {
+    background-color: #f00;
+    color: var(--button-text-color);
+}
+
+.restart-button:hover {
+    background-color: #d00;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.restart-button:active {
+    background-color: #b00;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+}
+
+.pause-button {
+    margin-top: 20px;
+    background-color: #0f0;
+    color: #000;
+}
+
+.pause-button:hover {
+    background-color: #0c0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.pause-button:active {
+    background-color: #090;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+}
+
+.start-button {
+    background: linear-gradient(135deg, var(--button-bg), var(--button-bg-hover));
+    color: var(--button-text-color);
+    font-size: 1.6rem;
+    padding: 16px 32px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:hover {
+    background: linear-gradient(135deg, var(--button-bg-hover), var(--button-bg));
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+}
+
+.start-button:active {
+    background: linear-gradient(135deg, var(--button-bg-hover), var(--button-bg));
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+}
+
+.start-button:focus {
+    outline: none;
+    border: 2px solid #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .board {
+        grid-template-columns: repeat(10, 30px);
+        grid-template-rows: repeat(10, 30px);
+    }
+
+    .cell {
+        width: 30px;
+        height: 30px;
+    }
+
+    .settings label,
+    .settings select {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+}
