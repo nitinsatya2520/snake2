@@ -1,11 +1,12 @@
 // src/App.js
 import React from 'react';
-import SnakeGame from './SnakeGame';
+import GameBoard from './GameBoard';
 
 function App() {
   return (
     <div className="App">
-      <SnakeGame />
+      
+      <GameBoard />
     </div>
   );
 }
