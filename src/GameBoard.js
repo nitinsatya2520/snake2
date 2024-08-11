@@ -137,6 +137,47 @@ const GameBoard = () => {
     return () => document.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
+  // Variables for swipe detection
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const handleTouchStart = (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > 0) {
+        setDirection({ x: 1, y: 0 }); // Swipe right
+      } else {
+        setDirection({ x: -1, y: 0 }); // Swipe left
+      }
+    } else {
+      if (deltaY > 0) {
+        setDirection({ x: 0, y: 1 }); // Swipe down
+      } else {
+        setDirection({ x: 0, y: -1 }); // Swipe up
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("touchstart", handleTouchStart);
+    document.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
   const handlePauseResume = () => {
     setIsPaused(!isPaused);
   };
@@ -197,14 +238,34 @@ const GameBoard = () => {
       )}
       <div className="arrows">
         <div className="arrows-row">
-          <button onClick={() => setDirection({ x: 0, y: -1 })}>&uarr;</button>
+          <button
+            onClick={() => setDirection({ x: 0, y: -1 })}
+            onTouchStart={() => setDirection({ x: 0, y: -1 })}
+          >
+            &uarr;
+          </button>
         </div>
         <div className="arrows-row">
-          <button onClick={() => setDirection({ x: -1, y: 0 })}>&larr;</button>
-          <button onClick={() => setDirection({ x: 1, y: 0 })}>&rarr;</button>
+          <button
+            onClick={() => setDirection({ x: -1, y: 0 })}
+            onTouchStart={() => setDirection({ x: -1, y: 0 })}
+          >
+            &larr;
+          </button>
+          <button
+            onClick={() => setDirection({ x: 1, y: 0 })}
+            onTouchStart={() => setDirection({ x: 1, y: 0 })}
+          >
+            &rarr;
+          </button>
         </div>
         <div className="arrows-row">
-          <button onClick={() => setDirection({ x: 0, y: 1 })}>&darr;</button>
+          <button
+            onClick={() => setDirection({ x: 0, y: 1 })}
+            onTouchStart={() => setDirection({ x: 0, y: 1 })}
+          >
+            &darr;
+          </button>
         </div>
       </div>
     </div>
